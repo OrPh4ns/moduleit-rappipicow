@@ -37,7 +37,6 @@ void setup()
 
 void loop() 
 {
-  Serial.println(Serial1.available());
   if (Serial1.available())
   {
     String res = Serial1.readString();
@@ -50,15 +49,17 @@ void loop()
     {
       Serial.println("CRT => Timeout or Failure");
       Serial1.write(reset, sizeof(reset));
-      Serial.println("RST => Restting Reader ][ "+Serial1.readString()); 
+      Serial.println("RST => Restting Reader"); 
       Serial1.write(ets, sizeof(ets));  
-      Serial.println("RST => STD ETS ][ "+Serial1.readString()); 
+      Serial.println("RST => STD ETS"); 
       Serial1.write(sriOn, sizeof(sriOn));
-      
     }
     else 
       if(res.length()!=0)
         {
+          res.replace("IVF", "");
+          res.replace("IVF ", "");
+          res.replace("BOF", "");
           wordCount = 0;
           // Find the first word
           int startIndex = 0;
@@ -84,7 +85,6 @@ void loop()
           }
           delay(2000);
         }
-        
   }
   else
   {
