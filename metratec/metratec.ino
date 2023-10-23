@@ -7,7 +7,7 @@
 @UHF    MetraTec
 */
 
-
+ const String respo = "Response:";
 const byte reset[] = {0x52, 0x53, 0x54, 0x0D};
 const byte ets[] = {0x53,0x54,0x44,0x20,0x45,0x54,0x53,0x0D};
 const byte sriOn[] = {0x53, 0x52, 0x49, 0x20, 0x4F, 0x4E ,0x0D};
@@ -28,11 +28,11 @@ void setup()
   Serial1.begin(115200); // Change the baud rate to match your sensor's specification
   Serial.begin(115200);
   Serial1.write(reset, sizeof(reset));
-  Serial.println("Restting Reader ][ "+Serial1.readString()); 
+  Serial.println(respo+"RST="+Serial1.readString()); 
   Serial1.write(ets, sizeof(ets));  
-  Serial.println("STD ETS ][ "+Serial1.readString()); 
+  Serial.println(respo+"STD ETS="+Serial1.readString()); 
   Serial1.write(sriOn, sizeof(sriOn));  
-  Serial.println("SRI ON ][ "+Serial1.readString()); 
+  Serial.println(respo+"SRI ON="+Serial1.readString()); 
 }
 
 void loop() 
@@ -42,23 +42,23 @@ void loop()
     String res = Serial1.readString();
     if(res.indexOf("NSS") != -1)
     {
-      Serial.println("NSS => Selection of Standard");
+      Serial.println(respo+"NSS");
       Serial1.write(ets, sizeof(ets));
     }
     else if(res.indexOf("CRT") != -1)
     {
-      Serial.println("CRT => Timeout or Failure");
+      Serial.println(respo+"CRT");
       Serial1.write(reset, sizeof(reset));
-      Serial.println("RST => Restting Reader"); 
+      Serial.println(respo+"RST"); 
       Serial1.write(ets, sizeof(ets));  
-      Serial.println("RST => STD ETS"); 
+      Serial.println(respo+"SRION"); 
       Serial1.write(sriOn, sizeof(sriOn));
     }
     else 
       if(res.length()!=0)
         {
           res.replace("IVF", "");
-          res.replace("IVF ", "");
+          res.replace("INV ", "");
           res.replace("BOF", "");
           wordCount = 0;
           // Find the first word
@@ -67,12 +67,10 @@ void loop()
           while (spaceIndex >= 0 && wordCount < 10) {
             words[wordCount] = res.substring(startIndex, spaceIndex);
             wordCount++;
-
             // Update the start and end indices to find the next word
             startIndex = spaceIndex + 1;
             spaceIndex = res.indexOf(' ', startIndex);
           }
-
           // Handle the last word (if any) after the loop
           if (wordCount < 10) {
             words[wordCount] = res.substring(startIndex);
@@ -81,13 +79,14 @@ void loop()
 
           // Print the extracted words
           for (int i = 0; i < wordCount; i++) {
-            Serial.println(words[i]);
+            Serial.println(respo+words[i]);
           }
           delay(2000);
         }
   }
   else
   {
+    Serial.println(respo+"TTC");
     Serial1.write(inv, sizeof(inv));
   }
 }
