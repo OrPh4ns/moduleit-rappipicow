@@ -23,20 +23,12 @@ const byte tagRead1[] = {0x52, 0x44, 0x54, 0x20, 0x54, 0x49, 0x44, 0x20, 0x30, 0
 
 String words[10];
 int wordCount = 0;
+
+// Vibration
 bool vibration = false;
-
-// Pins
-int sensorPin = 4; // to delete
+int vibPin = 11;
+// Ton
 int tonPin = 9;
-
-long myTimer1 = 0;
-long myTimeout1 = 500;
-long myTimer2 = 0;
-long myTimeout2 = 100;
-
-Timer<1, micros> timer_tone_toggle;
-Timer<1, micros> timer_tone_untoggle;
-
 
 void setup()
 {
@@ -52,9 +44,6 @@ void setup()
   Serial1.write(sriOn, sizeof(sriOn));
   Serial.println(respo + "SRI ON=" + Serial1.readString());
 
-  // Timer Instances
-  timer_tone_toggle.every(30000, tone_toggle);
-  timer_tone_untoggle.every(50000, tone_untoggle);
 }
 
 void loop()
