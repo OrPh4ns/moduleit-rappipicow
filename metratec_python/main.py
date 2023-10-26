@@ -1,33 +1,24 @@
-'''
-init update later
-'''
-from machine import UART, Pin
-from time import sleep
+from machine import Pin, ADC
+import bluetooth
+from ble_simple_peripheral import BLESimplePeripheral
+import time
 
+# Create a Bluetooth Low Energy (BLE) object
+ble = bluetooth.BLE()
 
-respo = "Response:"
-reset = bytearray([0x52, 0x53, 0x54, 0x0D])
-ets = bytearray([0x53, 0x54, 0x44, 0x20, 0x45, 0x54, 0x53, 0x0D])
-sriOn = bytearray([0x53, 0x52, 0x49, 0x20, 0x4F, 0x4E, 0x0D])
-inv = bytearray([0x49, 0x4E, 0x56, 0x0D])
-
-
-xxxx = bytearray([0x0D, 0x53, 0x54, 0x52])
-# UART0 initialisieren
-uart0 = UART(0, baudrate=9600, tx=Pin(0), rx=Pin(1), bits=8, parity=None, stop=1)
-print('UART0:', uart0)
-print()
-
-# UART1 initialisieren
-uart1 = UART(1, baudrate=9600, tx=Pin(8), rx=Pin(9), bits=8, parity=None, stop=1)
-print('UART1:', uart1)
-
+# Create an instance of the BLESimplePeripheral class with the BLE object
+sp = BLESimplePeripheral(ble)
+adc = ADC(4)
+a = 1
 while True:
-    txData = 'Hallo Welt'
+    if sp.is_connected(): # Check if a BLE connection is established
+        # Read the value from the internal temperature sensor
+        temperature = adc.read_u16() * 3.3 / (65535 * 0.8)
 
-    #print('Daten empfangen:', rxData.decode('utf-8'))
-    #print("oooooooooooooooooooooooooooooooo")
-    uart0.write(reset)
-    sleep(0.5)
-    print(uart0.read())
-    #sleep(0.5)
+        # Transmit the temperature value over BLE
+        temperature_data = str(temperature).encode()
+        
+        sp.send("1111111")
+        a = a+1
+        print(a)
+    time.sleep(3)
