@@ -7,8 +7,6 @@
 @UHF    MetraTec
 */
 
-// Includes
-#include "src/arduino-timer.h"
 
 const String respo = "Response:";
 const byte reset[] = {0x52, 0x53, 0x54, 0x0D};
