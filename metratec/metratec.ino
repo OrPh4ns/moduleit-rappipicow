@@ -41,9 +41,7 @@ void setup()
   Serial.println(respo + "STD ETS=" + Serial1.readString());
   Serial1.write(sriOn, sizeof(sriOn));
   Serial.println(respo + "SRI ON=" + Serial1.readString());
-
 }
-
 void loop()
 {
   if (Serial1.available())
