@@ -24,8 +24,11 @@ reader.init_reader()
 while True:
 
     # reader.transmit("xxxxx")
-    reader.counter = reader.counter + 1
-    print(reader.counter)
+
+    reader.read_epc()
+    
+    #reader.reset()
+  
     #reader.transmit("rrrr")
     #sleep(0.1)
     #print(reader.receive())
