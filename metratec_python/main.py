@@ -14,14 +14,12 @@ from reader import Reader
 
 # Objects
 # Create a Bluetooth Low Energy (BLE) object
-#ble = bluetooth.BLE()
+ble = bluetooth.BLE()
 # Create an instance of the BLESimplePeripheral class with the BLE object
-#sp = BLESimplePeripheral(ble)
+sp = BLESimplePeripheral(ble)
 # MetraTec Module object
 reader = Reader(115200,12,1)
 reader.init_reader()
-
-#uart0 = UART(0, baudrate=115200, tx=Pin(12), rx=Pin(1) ,bits=8, parity=None, stop=1)
 
 while True:
 

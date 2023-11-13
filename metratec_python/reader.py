@@ -35,7 +35,7 @@ class Reader:
          #print(self.__uart.read())
 
     def reset(self):
-        print("Hello my name is " + self.name)
+        self.transmit()
 
     def read_tag(self):
         pass
