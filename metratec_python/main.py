@@ -1,35 +1,44 @@
 '''
-init update later
+@author Abdulrahman Othman
+@email  abdulrahman.othman@web.de
+@date   25.10.2023
+@brief  Blind UHF Project
+@device Rasp Pi Pico W MicroPython
+@UHF    MetraTec
 '''
 from machine import UART, Pin
+import bluetooth
+from ble_simple_peripheral import BLESimplePeripheral
 from time import sleep
-from .reader import Reader
+from reader import Reader
 
-led_onboard = Pin("LED", Pin.OUT)
-
-respo = "Response:"
-reset = bytearray([0x52, 0x53, 0x54, 0x0D])
-ets = bytearray([0x53, 0x54, 0x44, 0x20, 0x45, 0x54, 0x53, 0x0D])
-sriOn = bytearray([0x53, 0x52, 0x49, 0x20, 0x4F, 0x4E, 0x0D])
-inv = bytearray([0x49, 0x4E, 0x56, 0x0D])
-
-
-from machine import UART, Pin
-from time import sleep
-import binascii
-
-
+# Objects
+# Create a Bluetooth Low Energy (BLE) object
+#ble = bluetooth.BLE()
+# Create an instance of the BLESimplePeripheral class with the BLE object
+#sp = BLESimplePeripheral(ble)
+# MetraTec Module object
 reader = Reader(115200,12,1)
-uart0 = UART(0, baudrate=115200, tx=Pin(12), rx=Pin(1) ,bits=8, parity=None, stop=1)
+reader.init_reader()
 
+#uart0 = UART(0, baudrate=115200, tx=Pin(12), rx=Pin(1) ,bits=8, parity=None, stop=1)
 
 while True:
-    #binascii.hexlify("5253540D")
 
-    uart0.write()
-    sleep(0.1)
-    if uart0.any():
-        print(uart0.read())
-    sleep(0.3)
-    
-    "52 53 54 0D"
+    # reader.transmit("xxxxx")
+    reader.counter = reader.counter + 1
+    print(reader.counter)
+    #reader.transmit("rrrr")
+    #sleep(0.1)
+    #print(reader.receive())
+
+    # i = 0
+    # while True:
+    #     if p.is_connected():
+    #         # Short burst of queued notifications.
+    #         for _ in range(3):
+    #             data = str(i) + "_"
+    #             print("TX", data)
+    #             p.send(data)
+    #             i += 1
+    #     time.sleep_ms(100)

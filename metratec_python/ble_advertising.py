@@ -98,5 +98,5 @@ def demo():
     print(decode_services(payload))
 
 
-if __name__ == "__main__":
-    demo()
+# if __name__ == "__main__":
+#     demo()

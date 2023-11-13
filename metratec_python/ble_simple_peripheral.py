@@ -1,10 +1,3 @@
-# This example demonstrates a UART periperhal.
-
-# This example demonstrates the low-level bluetooth module. For most
-# applications, we recommend using the higher-level aioble library which takes
-# care of all IRQ handling and connection management. See
-# https://github.com/micropython/micropython-lib/tree/master/micropython/bluetooth/aioble
-
 import bluetooth
 import random
 import struct
@@ -38,7 +31,7 @@ _UART_SERVICE = (
 
 
 class BLESimplePeripheral:
-    def __init__(self, ble, name="Aziz-BLE"):
+    def __init__(self, ble, name="ModuleIT"):
         self._ble = ble
         self._ble.active(True)
         self._ble.irq(self._irq)
@@ -102,5 +95,5 @@ def demo():
         time.sleep_ms(100)
 
 
-if __name__ == "__main__":
-    demo()
+# if __name__ == "__main__":
+#     demo()

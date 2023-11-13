@@ -18,11 +18,21 @@ metrca = {
     "tagRead": bytearray([0x52, 0x44, 0x54, 0x20, 0x54, 0x49, 0x44]),
     "tagRead1": bytearray([0x52, 0x44, 0x54, 0x20, 0x54, 0x49, 0x44, 0x20, 0x30, 0x20, 0x30])
 }
+repo = "Response= "
 
 class Reader:
     counter = 0
     def __init__(self, baudrate:int, tx_pin:int, rx_pin:int):
-        self.uart = UART(0, baudrate=baudrate, tx=Pin(tx_pin), rx=Pin(rx_pin))
+        self.__uart = UART(0, baudrate=baudrate, tx=Pin(tx_pin), rx=Pin(rx_pin))
+
+    def init_reader(self):
+        pass
+    def transmit(self, command):
+        self.__uart.write(command)
+
+    def receive(self):
+         return self.__uart.read()
+         #print(self.__uart.read())
 
     def reset(self):
         print("Hello my name is " + self.name)
