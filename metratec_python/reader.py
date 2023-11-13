@@ -45,31 +45,34 @@ class Reader:
         else:
             print(self.response("Init Error => "+res))
         
-    def transmit(self, command):
-        self.__uart.write(command)
+
 
     def response(self, message:str):
         return "Reponse["+message+"]"
 
     def reset(self):
-        self.__uart.transmit(metra['reset'])
+        self.__uart.write(metra['reset'])
 
     def read_epc(self):
         if self.__uart.any():
             resp = str(self.__uart.read())
-            print(resp)
+            if "IVF" in resp:
+                print(self.response(resp))
+                return self.response(resp)
+            elif "NSS" in resp:
+                print(self.response("NSS Failure"))
+                self.__uart.write(metra['ets'])
+                return self.response(resp)
+            elif "CRT" in resp:
+                print(self.response("CRT Failure"))
+                self.init_reader()
         else:
             self.__uart.write(metra['inv'])
             sleep_ms(50)
-
-    def prepare(self):
-        pass
+            return False
 
     def sleep(self):
         pass
 
     def wake_up(self):
-        pass
-
-    def response_print(self, msg:str, reponse):
         pass
