@@ -25,12 +25,15 @@ reader.init_reader()
 
 xPower = False
 
+def response(message:str):
+    return "Reponse["+message+"]"
 
 while True:
     if power_button.value():
         if xPower:
             sleep(0.5)
             xPower=False
+            sp.send(response("Device + Bluetooth Desconnected"))
             sp.desonnect()
         else:
             sleep(0.5)
@@ -38,7 +41,10 @@ while True:
             sp.connect()
             
     if xPower:
-        reader.read_epc()
+        # if sp.is_connected():
+        sp.send(str(reader.read_epc()))
+        sleep(0.5)
+    
     # if power_button.value() == 1:
     #     reader.read_epc()
     # else:
