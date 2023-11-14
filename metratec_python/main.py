@@ -13,6 +13,7 @@ from time import sleep
 from reader import Reader
 
 # Objects
+power_button = Pin(15, Pin.IN, Pin.PULL_DOWN)
 # Create a Bluetooth Low Energy (BLE) object
 ble = bluetooth.BLE()
 # Create an instance of the BLESimplePeripheral class with the BLE object
@@ -22,8 +23,12 @@ reader = Reader(115200,12,1)
 reader.init_reader()
 
 while True:
-
-    reader.read_epc()
+    if power_button.value() == 1:
+        print("xxxxxxxxxxxxxxxxxxx [ Power On]")
+    else:
+        print("Power Off")
+    sleep(0.5)
+    # reader.read_epc()
     
     #reader.transmit("rrrr")
     #sleep(0.1)
