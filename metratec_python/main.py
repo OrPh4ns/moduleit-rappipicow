@@ -6,29 +6,48 @@
 @device Rasp Pi Pico W MicroPython
 @UHF    MetraTec
 '''
-from machine import UART, Pin
-import bluetooth
+from machine import Pin,deepsleep
+from bluetooth import BLE
 from ble_simple_peripheral import BLESimplePeripheral
 from time import sleep
 from reader import Reader
 
+
 # Objects
 power_button = Pin(15, Pin.IN, Pin.PULL_DOWN)
 # Create a Bluetooth Low Energy (BLE) object
-ble = bluetooth.BLE()
+ble = BLE()
 # Create an instance of the BLESimplePeripheral class with the BLE object
 sp = BLESimplePeripheral(ble)
 # MetraTec Module object
 reader = Reader(115200,12,1)
 reader.init_reader()
 
+xPower = False
+
+
 while True:
-    if power_button.value() == 1:
-        print("xxxxxxxxxxxxxxxxxxx [ Power On]")
-    else:
-        print("Power Off")
-    sleep(0.5)
-    # reader.read_epc()
+    if power_button.value():
+        if xPower:
+            sleep(0.5)
+            xPower=False
+            sp.desonnect()
+        else:
+            sleep(0.5)
+            xPower=True
+            sp.connect()
+            
+    if xPower:
+        reader.read_epc()
+    # if power_button.value() == 1:
+    #     reader.read_epc()
+    # else:
+    #     print("Power Off")
+    # if not interrupt_pin.value():
+    #     machine.deepsleep(sleep_time * 1000)
+    # else:
+    #     time.sleep(sleep_time)
+    
     
     #reader.transmit("rrrr")
     #sleep(0.1)
