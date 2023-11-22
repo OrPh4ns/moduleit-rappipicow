@@ -42,30 +42,6 @@ while True:
             
     if xPower:
         # if sp.is_connected():
-        sp.send(str(reader.read_epc()))
-        sleep(0.5)
-    
-    # if power_button.value() == 1:
-    #     reader.read_epc()
-    # else:
-    #     print("Power Off")
-    # if not interrupt_pin.value():
-    #     machine.deepsleep(sleep_time * 1000)
-    # else:
-    #     time.sleep(sleep_time)
-    
-    
-    #reader.transmit("rrrr")
-    #sleep(0.1)
-    #print(reader.receive())
-
-    # i = 0
-    # while True:
-    #     if p.is_connected():
-    #         # Short burst of queued notifications.
-    #         for _ in range(3):
-    #             data = str(i) + "_"
-    #             print("TX", data)
-    #             p.send(data)
-    #             i += 1
-    #     time.sleep_ms(100)
+        reader.read_epc()
+        #sp.send(str(reader.read_epc()))
+        #sleep(0.5)
