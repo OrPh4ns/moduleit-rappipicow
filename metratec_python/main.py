@@ -75,7 +75,8 @@ while True:
         r = reader.read_epc()
         if sp.is_connected() and r:
             sp.send(r)
-        if "INV" in r:
+        if r and "IVF" in r:
+            play_tone(100, 30, 4000)
             print(r)
         #sp.send(str(reader.read_epc()))
         #sleep(0.5)

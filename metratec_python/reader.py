@@ -53,7 +53,7 @@ class Reader:
     def read_epc(self):
         if self.__uart.any():
             resp = str(self.__uart.read())
-            if "IVF" in resp:
+            if "IVF" in resp and len(resp) > 20:
                 print(self.response(resp))
                 return self.response(resp)
             elif "NSS" in resp:
