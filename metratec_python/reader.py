@@ -16,8 +16,7 @@ metra = {
     "inv": bytearray([0x49, 0x4E, 0x56, 0x0D]),
     "stb": bytearray([0x53, 0x54 , 0x42, 0x0D]),
     "setMsk": bytearray([0x53, 0x45, 0x54, 0x20, 0x4D, 0x53, 0x4B]),
-    "tagRead": bytearray([0x52, 0x44, 0x54, 0x20, 0x54, 0x49, 0x44]),
-    "tagRead1": bytearray([0x52, 0x44, 0x54, 0x20, 0x54, 0x49, 0x44, 0x20, 0x30, 0x20, 0x30])
+    "wak": bytearray([0x57, 0x41, 0x4B, 0x0D])
 }
 
 class Reader:
@@ -51,9 +50,6 @@ class Reader:
     def response(self, message:str):
         return "Reponse["+message+"]"
 
-    def reset(self):
-        self.__uart.write(metra['reset'])
-
     def read_epc(self):
         if self.__uart.any():
             resp = str(self.__uart.read())
@@ -74,6 +70,8 @@ class Reader:
 
     def sleep(self):
         self.__uart.write(metra['stb'])
+        print("Metratec is sleeping ..")
 
     def wake_up(self):
-        pass
+        self.__uart.write(metra['wak'])
+        print("Metratec is waking up ..")

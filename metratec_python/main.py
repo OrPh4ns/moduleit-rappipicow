@@ -35,10 +35,12 @@ while True:
             xPower=False
             sp.send(response("Device + Bluetooth Desconnected"))
             sp.desonnect()
+            reader.sleep()
         else:
             sleep(0.5)
             xPower=True
             sp.connect()
+            reader.wake_up()
             
     if xPower:
         # if sp.is_connected():
