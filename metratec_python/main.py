@@ -40,9 +40,6 @@ def play_tone(frequency, duration, duty):
     sleep_ms(duration)
 
 while True:
-    repeat = 3
-
-
     if power_button.value():
         if xPower:
             sleep(0.5)
@@ -51,13 +48,8 @@ while True:
             sp.desonnect()
             reader.sleep()
             play_tone(300, 250, 4000)
-            # for _ in range (repeat*2):
-            #         vibration_pin.toggle()
-            #         sleep(0.2)
-            # Turn on the vibration module
             vibration_pin.toggle()
             sleep(0.1)
-            #vibration_pin.off()
             play_tone(250, 200, 4000)
             play_tone(200, 150, 4000)
             vibration_pin.off()
@@ -78,5 +70,3 @@ while True:
         if r and "IVF" in r:
             play_tone(100, 30, 4000)
             print(r)
-        #sp.send(str(reader.read_epc()))
-        #sleep(0.5)
